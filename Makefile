@@ -1,72 +1,7 @@
-.PHONY: test-app test-likes test-contracts test-integration test-tacky feed-server earthquakes-cli swift-tests xcode-project
-
-test-app:
-	docker compose --profile test run --rm app sbt test
-
-test-likes:
-	docker compose --profile test run --rm likes-test
-
-test-contracts:
-	docker compose --profile test run --rm contracts-test
-
-test-integration:
-	docker compose --profile test run --rm integration-tests
-
-test-tacky:
-	docker compose run --rm likes-test
-	
-feed-server:
-	docker compose up --build postgres feed-server
-
-earthquakes-cli:
-	docker compose run --rm earthquakes-cli $(ARGS)
-
-swift-tests:
-	docker compose run --rm swift-tests
-
-xcode-project:
-	cd Demos && xcodegen generate
-
-.PHONY: test
-test:
-	swift test
-	
-.PHONY: format
-format:
-	swift format --in-place --recursive . 
-
-.PHONY: format-objc
-format-objc:
-	find . -type f \( -name '*.h' -o -name '*.m' \) -exec clang-format -i {} +
-	
-.PHONY: test-docker
-test-docker:
-	docker-compose run --rm tests
-	
-.PHONY: format-docker
-format-docker:
-	docker-compose run --rm format
-
-.PHONY: format-swift
-format-swift:
-	swift format . --recursive --in-place 
-
 .PHONY: format-kotlin
 format-kotlin:
 	ktfmt --enable-editorconfig . 
 	
-.PHONY: test-swift
-test-swift:
-	swift test
-
-.PHONY: test-swift-docker
-test-swift-docker:
-	docker-compose run --rm test-swift
-
-.PHONY: format-swift-docker
-format-swift-docker:
-	docker-compose run --rm format-swift
-
 .PHONY: build-kotlin
 build-kotlin:
 	./gradlew :witness-annotations:publishToMavenLocal :witness-runtime:publishToMavenLocal :witness-processor:publishToMavenLocal
