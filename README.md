@@ -18,13 +18,13 @@
   
 ```
 cd examples/ktor-server && \
-  gradle clean run --no-daemon \
+  ./gradlew clean run --no-daemon \
       --refresh-dependencies
 ```
   
 ```
 cd examples/android  && \
-  gradle clean assembleDebug \
+  ./gradlew clean assembleDebug \
     --refresh-dependencies \
     --no-daemon
 ```
